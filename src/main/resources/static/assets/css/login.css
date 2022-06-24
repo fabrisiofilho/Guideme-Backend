@@ -4,19 +4,51 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
-.borda{
-    background-image: url("../img/BannerLogin.png");
-    background-size: cover;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+.ladoEsquerdo {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.backgroundLogin {
+    background-color: #1f1f1f7d;
+    width: 100%;
+    max-width: 439px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ladoDireito {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 850px) {
+    .ladoDireito{
+        display: none;
+    }
+    .ladoEsquerdo{
+        width: 100% !important;
+    }
 }
 
 .input{
+    color: #ffffff5b;
+    font: bold;
+    font-size: 20px;
     width: 293px;
     height: 13px;
     border: none;
     padding: 10px;
     border-radius:5px;
+    background-color: #1f1f1f7d;
 }
 
 .input:focus {
@@ -32,22 +64,21 @@ body{
 }
 
 button{
-    background: linear-gradient(117deg, rgba(136,189,188,1) 0%, rgba(47,117,157,1) 100%);
     border: none;
-	background-color:#599bb3;
+	background-color:#00FF85;
 	border-radius:4px;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-size:20px;
+	font-size:25px;
 	font-weight:bold;
 	padding:10px 100px;
 	text-decoration:none;
 }
 
 button:hover {
-    background: linear-gradient(80deg, rgba(136,189,188,1) 0%, rgba(47,117,157,1) 100%);
-	background-color:#408c99;
+    background: #ffffff;
+	background-color:#00FF85;
 }
 
 button:active {
@@ -74,23 +105,15 @@ button:focus {
 }
 
 .fundoaviso{
-    background-color: #e8e8e8;
+    background-color: #1f1f1f7d;
     border-radius: 10px;
     width: 321px;
     height: 61px;
-    color: black;
-}
-
-@media only screen and (max-width: 850px) {
-    #imglateral{
-        display: none;
-    }
-    #login{
-        width: 100vw !important;
-    }
+    color: white;
 }
 
 .background {
-    background: rgb(136,189,188);
-    background: linear-gradient(117deg, rgba(136,189,188,1) 0%, rgba(47,117,157,1) 100%);
+    margin: 0;
+    background: #101F0B;
+    background: linear-gradient(117deg, #101F0B, #020000);
 }

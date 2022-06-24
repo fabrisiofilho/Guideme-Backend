@@ -14,26 +14,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body class="flex w-screen h-screen background">
-    <div id="login" class="w-full h-full flex justify-content-center align-items-center">
-        <form th:action="@{/login}" method="post" class="flex flex-column align-items-center justify-content-center h-30rem" 
-        style="border-radius: 10px; background-color: #F6F5F5; width: 400px; height:552px;">
-            <div class="fundo flex justify-content-center">
-                <p class="alert alert-danger" th:if="${#bools.isTrue(param.error)}">
-                    O e-mail ou senha incorreta.
-                </p>
-            </div>
-            <div class="flex flex-column justify-content-center align-items-center">
-                <input type="text" name="username" class="p-inputtext input mb-4" placeholder="Username" required autofocus>
-                <input type="password" name="password" class="p-inputtext input mb-3"  placeholder="Password" required>
-                <span class="sideOps flex justify-content-between mb-4">
-                    <span>
-                        <input class="border-700" type="checkbox"> <span class="text-700 font-italic">Lembrar de mim</span>
+    <div class="ladoEsquerdo">
+        <div class="backgroundLogin">
+            <form th:action="@{/login}" method="post" class="flex flex-column align-items-center justify-content-center h-30rem">
+                <div class="fundo flex justify-content-center">
+                    <p class="alert alert-danger" th:if="${#bools.isTrue(param.error)}">
+                        O e-mail ou senha incorreta.
+                    </p>
+                </div>
+                <div class="flex flex-column justify-content-center align-items-center">
+                    <input type="text" name="username" class="p-inputtext input mb-4" placeholder="Username" required autofocus>
+                    <input type="password" name="password" class="p-inputtext input mb-3"  placeholder="Password" required>
+                    <span class="sideOps flex justify-content-between mb-4">
+                        <span>
+                            <input style="background-color: transparent; border-color: white;" type="checkbox"> <span style="color: white;">Lembrar de mim</span>
+                        </span>
+                        <a href="/forgotPassword" style="color: white;">Esqueci minha senha</a>
                     </span>
-                    <a href="/forgotPassword" style="color: black;">Esqueci minha senha</a>
-                </span>
-                <button type="submit" class="p-button flex justify-content-center">Log In</button>
-            </div>
-        </form>
+                    <button type="submit" class="p-button flex justify-content-center">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="ladoDireito">
+        <img th:src="@{/assets/icon/Group 1.svg}" style="width: 60%;" alt="">
     </div>
 </body>
 </html>
