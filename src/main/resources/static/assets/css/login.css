@@ -13,7 +13,7 @@ body{
 }
 
 .backgroundLogin {
-    background-color: #1f1f1f7d;
+    background-color: #1f1f1f5f;
     width: 100%;
     max-width: 439px;
     height: 100%;
@@ -40,15 +40,16 @@ body{
 }
 
 .input{
-    color: #ffffff5b;
+    color: #ffffff55;
     font: bold;
-    font-size: 20px;
+    font-size: 15px;
     width: 293px;
-    height: 13px;
+    height: 24px;
+    font-weight: bold;
     border: none;
     padding: 10px;
     border-radius:5px;
-    background-color: #1f1f1f7d;
+    background-color: #111210;
 }
 
 .input:focus {
@@ -77,8 +78,8 @@ button{
 }
 
 button:hover {
-    background: #ffffff;
-	background-color:#00FF85;
+    color: #00FF85;
+	background-color:white;
 }
 
 button:active {
@@ -91,8 +92,8 @@ button:focus {
 }
 
 .btn-secondy{
-    background: white !important;
-    color: rgba(47,117,157,1) !important;
+    color: rgba(0, 0, 0, 0.416) !important;
+	background-color:#00FF85 !important;
 }
 
 .logo{
@@ -109,11 +110,14 @@ button:focus {
     border-radius: 10px;
     width: 321px;
     height: 61px;
-    color: white;
+    color: white !important;
 }
 
 .background {
     margin: 0;
     background: #101F0B;
     background: linear-gradient(117deg, #101F0B, #020000);
+    background-image: url(../icon/fundo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }

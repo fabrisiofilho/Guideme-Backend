@@ -22,6 +22,8 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
             .and()
                 .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("http://localhost:4200/home")
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .deleteCookies("SESSION", "JSESSIONID", "refreshToken", "remember-me")
