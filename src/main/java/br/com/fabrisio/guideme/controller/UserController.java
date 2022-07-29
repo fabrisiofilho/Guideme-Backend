@@ -1,6 +1,6 @@
 package br.com.fabrisio.guideme.controller;
 
-import br.com.fabrisio.guideme.dto.UserDto;
+import br.com.fabrisio.guideme.dto.UserDTO;
 import br.com.fabrisio.guideme.entity.UserEntity;
 import br.com.fabrisio.guideme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +36,12 @@ public class UserController {
     }
 
     @PutMapping("")
-    public ResponseEntity<UserEntity> update(@RequestBody UserDto updated){
+    public ResponseEntity<UserEntity> update(@RequestBody UserDTO updated){
         return ResponseEntity.ok(service.update(updated));
     }
 
     @PostMapping("")
-    public ResponseEntity<UserEntity> create(@RequestBody UserDto created){
+    public ResponseEntity<UserEntity> create(@RequestBody UserDTO created){
         return ResponseEntity.ok(service.create(created));
     }
 

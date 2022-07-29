@@ -1,4 +1,4 @@
-package br.com.fabrisio.guideme.security;
+package br.com.fabrisio.guideme.configuration;
 
 import java.util.Collections;
 

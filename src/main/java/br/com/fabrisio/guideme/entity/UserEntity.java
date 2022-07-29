@@ -1,11 +1,13 @@
 package br.com.fabrisio.guideme.entity;
 
-import br.com.fabrisio.guideme.dto.UserDto;
+import br.com.fabrisio.guideme.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -22,8 +24,11 @@ public class UserEntity implements Serializable {
 
     private String name;
 
+    @Column(unique = true)
     private String username;
 
+    @Column(unique = true)
+    @Email(message = "E-mail inválido!")
     private String email;
 
     private String password;
@@ -34,7 +39,7 @@ public class UserEntity implements Serializable {
     @Column(name = "last_update_date")
     private LocalDateTime lastUpdateDate;
 
-    public UserEntity update(UserDto userDto){
+    public UserEntity update(UserDTO userDto){
         this.name = userDto.getName();
         this.username = userDto.getUsername();
         this.email = userDto.getEmail();
@@ -50,4 +55,17 @@ public class UserEntity implements Serializable {
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
+
+    public Boolean isAuthenticate(final String password) {
+        if(this.password==null) {
+            return false;
+        }
+        return BCrypt.checkpw(password, this.password);
+    }
+
+    public void digestPassword(String password) {
+        final String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = hashedPassword;
+    }
+
 }

@@ -1,0 +1,1 @@
+from maven:3.8.1-openjdk-17-slim
