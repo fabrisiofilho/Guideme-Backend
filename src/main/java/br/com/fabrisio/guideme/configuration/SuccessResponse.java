@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.configuration;
 
+import br.com.fabrisio.guideme.controller.auth.AuthController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -11,4 +12,7 @@ public class SuccessResponse<T> {
         return new ResponseEntity<>(object, status);
     }
 
+    public ResponseEntity<T> handle(T request, Class<? extends AuthController> aClass, HttpStatus ok) {
+        return new ResponseEntity<>(request, ok);
+    }
 }

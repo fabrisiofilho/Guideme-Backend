@@ -1,4 +1,4 @@
-package br.com.fabrisio.guideme.security;
+package br.com.fabrisio.guideme.security.util;
 
 import br.com.fabrisio.guideme.configuration.EnvironmentVariable;
 import br.com.fabrisio.guideme.exception.TokenException;

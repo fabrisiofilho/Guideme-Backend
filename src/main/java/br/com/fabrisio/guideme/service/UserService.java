@@ -19,4 +19,5 @@ public interface UserService {
     Boolean isEmailInUse(String Email);
     UserEntity findByEmail(String email);
     UserEntity updateAccessDates(UserEntity userEntity);
+    
 }

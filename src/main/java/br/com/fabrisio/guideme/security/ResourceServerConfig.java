@@ -1,11 +1,13 @@
 package br.com.fabrisio.guideme.security;
 
+import br.com.fabrisio.guideme.security.filter.AuthorizationFilter;
+import br.com.fabrisio.guideme.security.login.AuthenticationSecurity;
+import br.com.fabrisio.guideme.security.util.TokenJWTSecurity;
 import br.com.fabrisio.guideme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,15 +35,18 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final TokenJWTSecurity tokenJWTSecurity;
     private final UserService userService;
+    private final SecurityUserDetailsService securityUserDetailsService;
 
     @Autowired
-    public ResourceServerConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, TokenJWTSecurity tokenJWTSecurity, UserService userService) {
+    public ResourceServerConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder,
+                                TokenJWTSecurity tokenJWTSecurity, UserService userService,
+                                SecurityUserDetailsService securityUserDetailsService) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.tokenJWTSecurity = tokenJWTSecurity;
         this.userService = userService;
+        this.securityUserDetailsService = securityUserDetailsService;
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,10 +58,8 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(new AuthenticationSecurity(authenticationManager(), tokenJWTSecurity, userService));
-//        http.addFilter(new AuthorizationSecurity(authenticationManager(), tokenJWTSecurity, userService));
-//        http.addFilterAfter(new TenantInterceptorSecurity(companyService, tenantService), AuthorizationSecurity.class);
+        http.addFilter(new AuthorizationFilter(authenticationManager(), tokenJWTSecurity, userService, securityUserDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
     }
 
     @Override

@@ -1,6 +1,5 @@
 package br.com.fabrisio.guideme.security;
 
-import br.com.fabrisio.guideme.configuration.EnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

@@ -1,9 +1,15 @@
-package br.com.fabrisio.guideme.security;
+package br.com.fabrisio.guideme.security.login;
 
+import br.com.fabrisio.guideme.dto.LoginDTO;
 import br.com.fabrisio.guideme.dto.UserDTO;
+import br.com.fabrisio.guideme.entity.UserEntity;
 import br.com.fabrisio.guideme.handlers.ServiceExceptionsHandler;
+import br.com.fabrisio.guideme.security.AuthUser;
+import br.com.fabrisio.guideme.security.util.TokenJWTSecurity;
 import br.com.fabrisio.guideme.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,10 +49,26 @@ public class AuthenticationSecurity extends UsernamePasswordAuthenticationFilter
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
-        Long id = ((AuthUser) authResult.getPrincipal()).getId();
         String username = ((AuthUser) authResult.getPrincipal()).getUsername();
         String token = jwtSecurity.generateToken(username);
         String refreshToken = jwtSecurity.generateRefreshToken(username);
+
+        UserEntity userEntity = userService.findByEmail(username);
+
+        LoginDTO login = LoginDTO.builder()
+                .token(token)
+                .refreshToken(refreshToken)
+                .user(new ModelMapper().map(userEntity, UserDTO.class))
+                .build();
+
+        try {
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(login);
+            response.getWriter().write(json);
+            response.getWriter().flush();
+        } catch (Exception ignored) {
+        }
+
     }
 
     @Override

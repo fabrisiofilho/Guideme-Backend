@@ -1,4 +1,4 @@
-package br.com.fabrisio.guideme.controller;
+package br.com.fabrisio.guideme.controller.user;
 
 import br.com.fabrisio.guideme.dto.UserDTO;
 import br.com.fabrisio.guideme.entity.UserEntity;

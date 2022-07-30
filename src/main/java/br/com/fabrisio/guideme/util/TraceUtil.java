@@ -1,7 +1,7 @@
 package br.com.fabrisio.guideme.util;
 
-import br.com.fabrisio.guideme.configuration.PatternsRegex;
-import br.com.fabrisio.guideme.configuration.ResponseValues;
+import br.com.fabrisio.guideme.configuration.constant.PatternsRegex;
+import br.com.fabrisio.guideme.configuration.constant.ResponseValues;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

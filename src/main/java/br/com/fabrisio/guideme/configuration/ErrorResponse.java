@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.configuration;
 
+import br.com.fabrisio.guideme.configuration.constant.ResponseValues;
 import br.com.fabrisio.guideme.exception.AbstractTreatment;
 import br.com.fabrisio.guideme.exception.StandardTreatment;
 import br.com.fabrisio.guideme.util.TraceUtil;

@@ -5,7 +5,6 @@ import br.com.fabrisio.guideme.entity.UserEntity;
 import br.com.fabrisio.guideme.exception.NotFoundException;
 import br.com.fabrisio.guideme.repository.UserRepository;
 import br.com.fabrisio.guideme.service.UserService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

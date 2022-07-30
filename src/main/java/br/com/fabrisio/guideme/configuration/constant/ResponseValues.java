@@ -1,4 +1,4 @@
-package br.com.fabrisio.guideme.configuration;
+package br.com.fabrisio.guideme.configuration.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
