@@ -1,14 +1,15 @@
 package br.com.fabrisio.guideme.security;
 
-import br.com.fabrisio.guideme.entity.UserEntity;
+import br.com.fabrisio.guideme.entity.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 @Getter
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class AuthUser implements UserDetails {
         this.email = usuario.getEmail();
         this.password = usuario.getPassword();
         this.enabled = true;
-        this.authorities = Collections.emptyList();
+        this.authorities = getAuthoritiesUser(usuario);
     }
 
 
@@ -65,5 +66,13 @@ public class AuthUser implements UserDetails {
     public boolean isEnabled() {
         return this.enabled;
     }
+
+    private Collection<GrantedAuthority> getAuthoritiesUser(UserEntity user){
+        String profile = user.getProfile().toString();
+        Collection<GrantedAuthority> authory = new ArrayList<>();
+        authory.add(new SimpleGrantedAuthority(profile));
+        return authory;
+    }
+
 
 }

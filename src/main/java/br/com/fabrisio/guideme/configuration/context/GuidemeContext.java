@@ -1,6 +1,6 @@
 package br.com.fabrisio.guideme.configuration.context;
 
-import br.com.fabrisio.guideme.entity.UserEntity;
+import br.com.fabrisio.guideme.entity.user.UserEntity;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

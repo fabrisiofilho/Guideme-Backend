@@ -29,28 +29,27 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
     private static final String[] PUBLIC_MATCHERS_GET = {};
-    private static final String[] PUBLIC_MATCHERS_POST = {};
+    private static final String[] PUBLIC_MATCHERS_POST = { "/auth/**" };
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final TokenJWTSecurity tokenJWTSecurity;
     private final UserService userService;
-    private final SecurityUserDetailsService securityUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     public ResourceServerConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder,
                                 TokenJWTSecurity tokenJWTSecurity, UserService userService,
-                                SecurityUserDetailsService securityUserDetailsService) {
+                                CustomUserDetailsService customUserDetailsService) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.tokenJWTSecurity = tokenJWTSecurity;
         this.userService = userService;
-        this.securityUserDetailsService = securityUserDetailsService;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.cors().and().csrf().disable();
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll();
@@ -58,7 +57,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(new AuthenticationSecurity(authenticationManager(), tokenJWTSecurity, userService));
-        http.addFilter(new AuthorizationFilter(authenticationManager(), tokenJWTSecurity, userService, securityUserDetailsService));
+        http.addFilter(new AuthorizationFilter(authenticationManager(), tokenJWTSecurity, userService, customUserDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

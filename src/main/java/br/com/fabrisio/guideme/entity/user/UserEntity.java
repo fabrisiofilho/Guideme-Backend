@@ -1,7 +1,8 @@
-package br.com.fabrisio.guideme.entity;
+package br.com.fabrisio.guideme.entity.user;
 
-import br.com.fabrisio.guideme.dto.UserDTO;
+import br.com.fabrisio.guideme.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "sys_user")
 public class UserEntity implements Serializable {
 
@@ -32,6 +34,24 @@ public class UserEntity implements Serializable {
     private String email;
 
     private String password;
+
+    @Column(name = "profile")
+    private ProfileEnum profile;
+
+    @Column(name = "url_photo")
+    private String urlPhoto;
+
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Column(name = "token_recover")
+    private String tokenRecover;
+
+    private Double coins;
+
+    private Double points;
+
+    private Double exps;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;

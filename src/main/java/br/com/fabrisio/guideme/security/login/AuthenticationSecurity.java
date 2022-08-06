@@ -1,8 +1,8 @@
 package br.com.fabrisio.guideme.security.login;
 
-import br.com.fabrisio.guideme.dto.LoginDTO;
-import br.com.fabrisio.guideme.dto.UserDTO;
-import br.com.fabrisio.guideme.entity.UserEntity;
+import br.com.fabrisio.guideme.dto.login.LoginDTO;
+import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.handlers.ServiceExceptionsHandler;
 import br.com.fabrisio.guideme.security.AuthUser;
 import br.com.fabrisio.guideme.security.util.TokenJWTSecurity;
@@ -58,7 +58,7 @@ public class AuthenticationSecurity extends UsernamePasswordAuthenticationFilter
         LoginDTO login = LoginDTO.builder()
                 .token(token)
                 .refreshToken(refreshToken)
-                .user(new ModelMapper().map(userEntity, UserDTO.class))
+                .user(new ModelMapper().map(userEntity, UserDTO.Login.class))
                 .build();
 
         try {

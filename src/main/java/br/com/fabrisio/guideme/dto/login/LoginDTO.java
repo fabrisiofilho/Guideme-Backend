@@ -1,5 +1,6 @@
-package br.com.fabrisio.guideme.dto;
+package br.com.fabrisio.guideme.dto.login;
 
+import br.com.fabrisio.guideme.dto.user.UserDTO;
 import lombok.*;
 
 @Getter
@@ -11,6 +12,6 @@ public class LoginDTO {
 
     private String token;
     private String refreshToken;
-    private UserDTO user;
+    private UserDTO.Login user;
 
 }
