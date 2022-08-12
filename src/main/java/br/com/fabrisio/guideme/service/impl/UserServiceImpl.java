@@ -2,6 +2,8 @@ package br.com.fabrisio.guideme.service.impl;
 
 import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.user.InventoryEntity;
+import br.com.fabrisio.guideme.entity.user.ProfileEnum;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.exception.NotFoundException;
 import br.com.fabrisio.guideme.repository.UserRepository;
@@ -33,7 +35,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity create(UserDTO userDto) {
-        return repository.save(new UserEntity(userDto.getName(), userDto.getUsername(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()), LocalDateTime.now(), LocalDateTime.now()));
+        var user = UserEntity.builder()
+                .name(userDto.getName())
+                .username(userDto.getUsername())
+                .email(userDto.getEmail())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .createDate(LocalDateTime.now())
+                .lastUpdateDate(LocalDateTime.now())
+                .coins(0D)
+                .exps(0D)
+                .points(0D)
+                .profile(ProfileEnum.ALUNO)
+                .inventory(new InventoryEntity())
+                .build();
+        return repository.save(user);
     }
 
     @Override
@@ -78,12 +93,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findByEmail(String email) {
-        return repository.findByEmail(email).orElse(null);
+        return repository.findByEmail(email).orElseThrow(()-> {throw new NotFoundException("Não foi encontrado o usuario com o email");});
     }
 
     @Override
     public UserEntity findByUsername(String username) {
-        return repository.findByUsername(username).orElse(null);
+        return repository.findByUsername(username).orElseThrow(()-> {throw new NotFoundException("Não foi encontrado o usuario com o username");});
     }
 
     @Override
@@ -123,6 +138,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findByTokenRecover(String token) {
         return repository.findByTokenRecover(token).orElseThrow(()-> {throw new NotFoundException("Não foi encontrado o usuario com o token");});
+    }
+
+    @Override
+    public List<UserEntity> ranking() {
+        return repository.ranking();
     }
 
     @Override

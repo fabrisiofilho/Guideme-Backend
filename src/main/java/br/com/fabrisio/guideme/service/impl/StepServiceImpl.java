@@ -1,7 +1,11 @@
 package br.com.fabrisio.guideme.service.impl;
 
+import br.com.fabrisio.guideme.dto.roadmap.ContentDTO;
 import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
+import br.com.fabrisio.guideme.entity.roadmap.ContentEntity;
+import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
+import br.com.fabrisio.guideme.repository.ContentRepository;
 import br.com.fabrisio.guideme.repository.StepRepository;
 import br.com.fabrisio.guideme.service.StepService;
 import org.modelmapper.ModelMapper;
@@ -13,6 +17,9 @@ public class StepServiceImpl implements StepService {
 
     @Autowired
     private StepRepository stepRepository;
+
+    @Autowired
+    private ContentRepository contentRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -37,6 +44,15 @@ public class StepServiceImpl implements StepService {
         StepEntity stepEntity = read(id);
         stepRepository.deleteById(id);
         return stepEntity;
+    }
+
+    @Override
+    public StepEntity addContent(Long id, ContentDTO contentDTO) {
+        ContentEntity contentEntity = modelMapper.map(contentDTO, ContentEntity.class);
+        StepEntity step = read(id);
+        contentEntity.setStep(step);
+        contentRepository.save(contentEntity);
+        return read(step.getId());
     }
 
 }

@@ -1,4 +1,4 @@
-package br.com.fabrisio.guideme.integration.login;
+package br.com.fabrisio.guideme.integration.auth;
 
 import br.com.fabrisio.guideme.service.UserService;
 import br.com.fabrisio.guideme.service.impl.UserServiceImpl;

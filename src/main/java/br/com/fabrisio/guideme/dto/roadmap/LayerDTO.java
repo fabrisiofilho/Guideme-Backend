@@ -1,7 +1,6 @@
 package br.com.fabrisio.guideme.dto.roadmap;
 
 import lombok.*;
-import org.bouncycastle.pqc.crypto.rainbow.Layer;
 
 import java.util.List;
 
@@ -10,8 +9,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoadmapDTO {
+public class LayerDTO {
     private Long id;
-    private String title;
-    private List<LayerDTO> layers;
+    private List<StepDTO> steps;
+    private Long idRoadmap;
 }

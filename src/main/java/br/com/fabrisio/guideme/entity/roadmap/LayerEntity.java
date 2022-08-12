@@ -1,6 +1,5 @@
 package br.com.fabrisio.guideme.entity.roadmap;
 
-import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,21 +13,18 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "roadmap")
-public class RoadmapEntitty {
+@Table(name = "layer")
+public class LayerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @ManyToOne
+    @JoinColumn(name="roadmap_id", nullable=false)
+    private RoadmapEntitty roadmap;
 
-    @OneToMany(mappedBy = "roadmap")
-    private List<LayerEntity> layers;
-
-    public RoadmapEntitty atualizar(RoadmapDTO roadmapDTO) {
-        this.title = roadmapDTO.getTitle();
-        return this;
-    }
+    @OneToMany(mappedBy = "layer")
+    private List<StepEntity> steps;
 
 }

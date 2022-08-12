@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface StoreService {
 
-    ItemEntity createItem(ItemDTO itemDTO);
+    ItemEntity createItem(ItemDTO dto);
     ItemEntity readItem(Long id);
-    ItemEntity updateItem(ItemDTO itemDTO);
+    ItemEntity updateItem(ItemDTO dto);
     ItemEntity deleteItem(Long id);
     List<ItemEntity> listItens();
     Page<ItemEntity> pageableItens(Pageable pageable);

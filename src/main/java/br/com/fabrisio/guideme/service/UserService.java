@@ -2,6 +2,7 @@ package br.com.fabrisio.guideme.service;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
+import org.h2.engine.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,5 +27,6 @@ public interface UserService {
     UserEntity updateName(UserDTO.UpdateName dto);
     UserEntity updateRecoverToken(String token, UserEntity userEntity);
     UserEntity findByTokenRecover(String token);
+    List<UserEntity> ranking();
     
 }

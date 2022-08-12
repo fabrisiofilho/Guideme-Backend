@@ -1,6 +1,7 @@
 package br.com.fabrisio.guideme.entity.user;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -53,6 +55,13 @@ public class UserEntity implements Serializable {
 
     private Double exps;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_id", referencedColumnName = "id")
+    private InventoryEntity inventory;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserProgressEntity> progress;
+
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
@@ -74,18 +83,6 @@ public class UserEntity implements Serializable {
         this.password = password;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-    }
-
-    public Boolean isAuthenticate(final String password) {
-        if(this.password==null) {
-            return false;
-        }
-        return BCrypt.checkpw(password, this.password);
-    }
-
-    public void digestPassword(String password) {
-        final String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.password = hashedPassword;
     }
 
 }

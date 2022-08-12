@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,20 +28,13 @@ public class StepEntity {
     @Column(name = "bounty_xp")
     private Double bountyXp;
 
-    @Column(name = "is_done")
-    private boolean isDone;
-
-    @Column(name = "is_open")
-    private boolean isOpen;
-
     private Double difficulty;
 
-    private Double conclusion;
-
-    private Integer layer;
-
     @ManyToOne
-    @JoinColumn(name="roadmap_id", nullable=false)
-    private RoadmapEntitty roadmap;
+    @JoinColumn(name="layer_id", nullable=false)
+    private LayerEntity layer;
+
+    @OneToMany(mappedBy = "step")
+    private List<ContentEntity> contents;
 
 }

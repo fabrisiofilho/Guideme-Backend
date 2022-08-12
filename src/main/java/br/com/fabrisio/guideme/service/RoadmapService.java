@@ -1,15 +1,16 @@
 package br.com.fabrisio.guideme.service;
 
+import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
 import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
 import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
 
 public interface RoadmapService {
 
-    RoadmapEntitty create(RoadmapDTO userDto);
+    RoadmapEntitty create(RoadmapDTO dto);
     RoadmapEntitty read(Long id);
-    RoadmapEntitty update(RoadmapDTO userDto);
+    RoadmapEntitty update(RoadmapDTO dto);
     RoadmapEntitty delete(Long id);
-    RoadmapEntitty addStep(Long id, StepDTO stepDTO);
+    RoadmapEntitty addLayer(Long id, LayerDTO stepDTO);
 
 }

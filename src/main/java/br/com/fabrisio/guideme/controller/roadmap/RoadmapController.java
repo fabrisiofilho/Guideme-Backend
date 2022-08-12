@@ -1,10 +1,13 @@
 package br.com.fabrisio.guideme.controller.roadmap;
 
 import br.com.fabrisio.guideme.configuration.SuccessResponse;
+import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
 import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
 import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
+import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
 import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
+import br.com.fabrisio.guideme.service.LayerService;
 import br.com.fabrisio.guideme.service.RoadmapService;
 import br.com.fabrisio.guideme.service.StepService;
 import org.modelmapper.ModelMapper;
@@ -22,6 +25,9 @@ public class RoadmapController {
     private RoadmapService roadmapService;
 
     @Autowired
+    private LayerService layerService;
+
+    @Autowired
     private StepService stepService;
 
     @Autowired
@@ -35,12 +41,12 @@ public class RoadmapController {
         return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
     }
 
-    @PostMapping("/addStep")
+    @PostMapping("/addLayer")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<RoadmapDTO> addStep(@RequestBody StepDTO step){
-        RoadmapEntitty entity = roadmapService.addStep(step.getIdRoadmap(), step);
-        RoadmapDTO dto = modelMapper.map(entity, RoadmapDTO.class);
-        return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
+    public ResponseEntity<RoadmapDTO> addStep(@RequestBody LayerDTO dto){
+        RoadmapEntitty entity = roadmapService.addLayer(dto.getIdRoadmap(), dto);
+        RoadmapDTO roadmapDTO = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(roadmapDTO, this.getClass(), HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
@@ -59,9 +65,9 @@ public class RoadmapController {
 
     @DeleteMapping("/delete/step/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<RoadmapDTO> deleteStepById(@PathVariable Long id){
-        StepEntity stepEntity = stepService.delete(id);
-        RoadmapEntitty entity = roadmapService.read(stepEntity.getRoadmap().getId());
+    public ResponseEntity<RoadmapDTO> deleteLayerById(@PathVariable Long id){
+        LayerEntity layerEntity = layerService.delete(id);
+        RoadmapEntitty entity = roadmapService.read(layerEntity.getRoadmap().getId());
         RoadmapDTO dto = modelMapper.map(entity, RoadmapDTO.class);
         return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
     }

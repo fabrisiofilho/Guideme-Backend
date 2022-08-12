@@ -1,10 +1,13 @@
 package br.com.fabrisio.guideme.service.impl;
 
+import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
 import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
 import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
+import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
 import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
 import br.com.fabrisio.guideme.exception.BuninessException;
+import br.com.fabrisio.guideme.repository.LayerRepository;
 import br.com.fabrisio.guideme.repository.RoadmapRepository;
 import br.com.fabrisio.guideme.repository.StepRepository;
 import br.com.fabrisio.guideme.service.RoadmapService;
@@ -20,7 +23,7 @@ public class RoadmapServiceImpl implements RoadmapService {
     private RoadmapRepository roadmapRepository;
 
     @Autowired
-    private StepRepository stepRepository;
+    private LayerRepository layerRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -49,13 +52,13 @@ public class RoadmapServiceImpl implements RoadmapService {
     }
 
     @Override
-    @Transactional
-    public RoadmapEntitty addStep(Long id, StepDTO stepDTO) {
-        StepEntity stepEntity = modelMapper.map(stepDTO, StepEntity.class);
+    public RoadmapEntitty addLayer(Long id, LayerDTO layerDTO) {
+        LayerEntity layerEntity = modelMapper.map(layerDTO, LayerEntity.class);
         RoadmapEntitty roadmapEntitty = read(id);
-        stepEntity.setRoadmap(roadmapEntitty);
-        stepRepository.save(stepEntity);
+        layerEntity.setRoadmap(roadmapEntitty);
+        layerRepository.save(layerEntity);
         return read(roadmapEntitty.getId());
     }
+
 
 }

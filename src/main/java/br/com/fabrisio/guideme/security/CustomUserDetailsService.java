@@ -2,6 +2,7 @@ package br.com.fabrisio.guideme.security;
 
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.exception.AuthenticationException;
+import br.com.fabrisio.guideme.exception.NotFoundException;
 import br.com.fabrisio.guideme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +21,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity usuario = userService
-                .findByEmail(username);
+        UserEntity usuario = findUserByEmail(username);
         if (Objects.isNull(usuario)) {
-            usuario = userService.findByUsername(username);
+            usuario = findUserByUsername(username);
         }
         if (Objects.isNull(usuario)) {
             throw new UsernameNotFoundException("Usuário não encontrado com e-mail informado");
@@ -36,6 +36,24 @@ public class CustomUserDetailsService implements UserDetailsService {
             return (AuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         } catch (Exception e) {
             throw new AuthenticationException(e.getMessage(), e);
+        }
+    }
+
+    private UserEntity findUserByEmail(String email) {
+        try {
+            return userService
+                    .findByEmail(email);
+        } catch(NotFoundException e) {
+            return null;
+        }
+    }
+
+    private UserEntity findUserByUsername(String username) {
+        try {
+            return userService
+                    .findByUsername(username);
+        } catch(NotFoundException e) {
+            return null;
         }
     }
 }
