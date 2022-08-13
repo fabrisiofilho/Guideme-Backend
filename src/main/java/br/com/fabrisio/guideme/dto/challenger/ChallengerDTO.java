@@ -2,8 +2,6 @@ package br.com.fabrisio.guideme.dto.challenger;
 
 import lombok.*;
 
-import javax.persistence.Column;
-
 @Getter
 @Setter
 @Builder

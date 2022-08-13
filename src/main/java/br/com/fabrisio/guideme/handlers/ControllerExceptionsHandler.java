@@ -14,7 +14,7 @@ public class ControllerExceptionsHandler {
     @ExceptionHandler({ AccessDeniedException.class })
     public ResponseEntity<Object> handleAccessDeniedException(
             Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>(
+        return new ResponseEntity<>(
                 "Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 

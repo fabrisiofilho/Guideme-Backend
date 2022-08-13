@@ -1,6 +1,7 @@
 package br.com.fabrisio.guideme.service.impl;
 
 import br.com.fabrisio.guideme.dto.user.UserProgressDTO;
+import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.entity.user.UserProgressEntity;
 import br.com.fabrisio.guideme.exception.NotFoundException;
 import br.com.fabrisio.guideme.repository.UserProgressRepository;
@@ -8,6 +9,8 @@ import br.com.fabrisio.guideme.service.UserProgressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserProgressServiceImpl implements UserProgressService {
@@ -38,5 +41,10 @@ public class UserProgressServiceImpl implements UserProgressService {
         UserProgressEntity userProgressEntity = read(id);
         userProgressRepository.deleteById(id);
         return userProgressEntity;
+    }
+
+    @Override
+    public List<UserProgressEntity> findByUser(UserEntity user) {
+        return userProgressRepository.findByUser(user.getId());
     }
 }

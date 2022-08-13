@@ -17,7 +17,7 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ErrorResponse {
 
-    public static ResponseEntity<Map<String, List<AbstractTreatment>>> handle(List<AbstractTreatment> treatments, HttpServletRequest request, HttpStatus status) {
+    public static ResponseEntity<Map<String, List<AbstractTreatment>>> handle(List<AbstractTreatment> treatments, HttpStatus status) {
         Map<String, List<AbstractTreatment>> result = new HashMap<>();
         result.put(ResponseValues.KEY_ERRORS, treatments);
         return new ResponseEntity<>(result, status);

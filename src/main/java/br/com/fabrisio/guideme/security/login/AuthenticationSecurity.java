@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.security.login;
 
+import br.com.fabrisio.guideme.configuration.constant.ResponseValues;
 import br.com.fabrisio.guideme.dto.login.LoginDTO;
 import br.com.fabrisio.guideme.dto.user.UserDTO;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
@@ -10,6 +11,8 @@ import br.com.fabrisio.guideme.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,7 +69,9 @@ public class AuthenticationSecurity extends UsernamePasswordAuthenticationFilter
             String json = ow.writeValueAsString(login);
             response.getWriter().write(json);
             response.getWriter().flush();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            Logger logger = LoggerFactory.getLogger(ResponseValues.KEY_GLOBAL);
+            logger.warn("A WARN Message");
         }
 
     }

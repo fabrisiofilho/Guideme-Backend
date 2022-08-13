@@ -1,6 +1,5 @@
 package br.com.fabrisio.guideme.dto.roadmap;
 
-import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
 import lombok.*;
 
 @Getter
@@ -16,5 +15,5 @@ public class ContentDTO {
     private String linkOne;
     private String linkTwo;
     private String linkTree;
-    private StepEntity step;
+    private Long idStep;
 }

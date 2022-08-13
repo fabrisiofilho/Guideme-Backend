@@ -1,12 +1,12 @@
 package br.com.fabrisio.guideme.controller.roadmap;
 
 import br.com.fabrisio.guideme.configuration.SuccessResponse;
+import br.com.fabrisio.guideme.dto.roadmap.ContentDTO;
 import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
 import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
 import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
 import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
-import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
 import br.com.fabrisio.guideme.service.LayerService;
 import br.com.fabrisio.guideme.service.RoadmapService;
 import br.com.fabrisio.guideme.service.StepService;
@@ -43,8 +43,24 @@ public class RoadmapController {
 
     @PostMapping("/addLayer")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<RoadmapDTO> addStep(@RequestBody LayerDTO dto){
+    public ResponseEntity<RoadmapDTO> addLayer(@RequestBody LayerDTO dto){
         RoadmapEntitty entity = roadmapService.addLayer(dto.getIdRoadmap(), dto);
+        RoadmapDTO roadmapDTO = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(roadmapDTO, this.getClass(), HttpStatus.OK);
+    }
+
+    @PostMapping("/addStep")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<RoadmapDTO> addLayer(@RequestBody StepDTO dto){
+        RoadmapEntitty entity = roadmapService.addStepToLayer(dto.getIdLayer(), dto);
+        RoadmapDTO roadmapDTO = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(roadmapDTO, this.getClass(), HttpStatus.OK);
+    }
+
+    @PostMapping("/addContent")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<RoadmapDTO> addContent(@RequestBody ContentDTO dto){
+        RoadmapEntitty entity = roadmapService.addContentToStep(dto.getIdStep(), dto);
         RoadmapDTO roadmapDTO = modelMapper.map(entity, RoadmapDTO.class);
         return new SuccessResponse<RoadmapDTO>().handle(roadmapDTO, this.getClass(), HttpStatus.OK);
     }
@@ -69,6 +85,13 @@ public class RoadmapController {
         LayerEntity layerEntity = layerService.delete(id);
         RoadmapEntitty entity = roadmapService.read(layerEntity.getRoadmap().getId());
         RoadmapDTO dto = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
+    }
+
+    @GetMapping("/get")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ALUNO')")
+    public ResponseEntity<RoadmapDTO> getRoadmapByUserProgress(){
+        RoadmapDTO dto = roadmapService.getRoadmapByUserProgress();
         return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
     }
 

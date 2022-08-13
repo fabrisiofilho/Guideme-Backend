@@ -15,8 +15,8 @@ public class StepDTO {
     private Double bountyCoin;
     private Double bountyXp;
     private Double difficulty;
-    private Double conclusion;
-    private Integer layer;
     private List<ContentDTO> contents;
     private Long idLayer;
+    private Boolean isDone;
+    private Boolean isOpen;
 }

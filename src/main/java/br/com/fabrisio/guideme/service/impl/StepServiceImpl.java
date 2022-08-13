@@ -3,7 +3,6 @@ package br.com.fabrisio.guideme.service.impl;
 import br.com.fabrisio.guideme.dto.roadmap.ContentDTO;
 import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
 import br.com.fabrisio.guideme.entity.roadmap.ContentEntity;
-import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
 import br.com.fabrisio.guideme.repository.ContentRepository;
 import br.com.fabrisio.guideme.repository.StepRepository;

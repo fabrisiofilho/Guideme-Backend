@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.security;
 
+import br.com.fabrisio.guideme.configuration.constant.ResponseValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -29,7 +30,7 @@ public class BasicAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).roles("BASIC");
+        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).roles(ResponseValues.BASIC);
     }
 
     @Override
@@ -37,8 +38,8 @@ public class BasicAuthSecurityConfig extends WebSecurityConfigurerAdapter {
         http.requestMatchers().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET);
         http.requestMatchers().antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST);
 
-        http.authorizeRequests().antMatchers(PUBLIC_MATCHERS_GET).hasRole("BASIC");
-        http.authorizeRequests().antMatchers(PUBLIC_MATCHERS_POST).hasRole("BASIC");
+        http.authorizeRequests().antMatchers(PUBLIC_MATCHERS_GET).hasRole(ResponseValues.BASIC);
+        http.authorizeRequests().antMatchers(PUBLIC_MATCHERS_POST).hasRole(ResponseValues.BASIC);
         http.httpBasic().authenticationEntryPoint(basicEntryPointSecurity).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors().and().csrf().disable();
     }

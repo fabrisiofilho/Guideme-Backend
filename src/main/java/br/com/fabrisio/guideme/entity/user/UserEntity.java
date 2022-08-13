@@ -1,12 +1,10 @@
 package br.com.fabrisio.guideme.entity.user;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
-import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

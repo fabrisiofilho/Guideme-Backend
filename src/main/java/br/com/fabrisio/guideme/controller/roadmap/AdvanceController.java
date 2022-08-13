@@ -1,9 +1,8 @@
 package br.com.fabrisio.guideme.controller.roadmap;
 
-import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
+import br.com.fabrisio.guideme.dto.user.UserProgressDTO;
 import br.com.fabrisio.guideme.service.UserProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +18,8 @@ public class AdvanceController {
 
     @PostMapping("")
     @PreAuthorize("hasAnyAuthority('ALUNO')")
-    public void registerProgress(@RequestBody RoadmapDTO roadmap){
-
+    public void registerProgress(@RequestBody UserProgressDTO roadmap){
+        userProgressService.create(roadmap);
     }
-
 
 }

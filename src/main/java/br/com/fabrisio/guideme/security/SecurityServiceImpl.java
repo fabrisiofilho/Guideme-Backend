@@ -1,6 +1,5 @@
 package br.com.fabrisio.guideme.security;
 
-import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.security.util.TokenJWTSecurity;
 import br.com.fabrisio.guideme.service.UserService;

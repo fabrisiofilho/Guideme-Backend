@@ -1,7 +1,6 @@
 package br.com.fabrisio.guideme.controller.store;
 
 import br.com.fabrisio.guideme.dto.store.ItemDTO;
-import br.com.fabrisio.guideme.dto.user.UserDTO;
 import br.com.fabrisio.guideme.entity.store.ItemEntity;
 import br.com.fabrisio.guideme.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
