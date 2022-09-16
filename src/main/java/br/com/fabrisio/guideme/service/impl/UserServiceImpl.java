@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -126,6 +128,17 @@ public class UserServiceImpl implements UserService {
     public UserEntity updateName(UserDTO.UpdateName dto) {
         UserEntity entity = read(dto.getId());
         entity.setName(dto.getName());
+        return repository.save(entity);
+    }
+
+    @Override
+    public UserEntity updateUser(UserDTO.UpdateUser dto) {
+        UserEntity entity = read(dto.getId());
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        if (!entity.getPassword().equals(dto.getPassword())) {
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
         return repository.save(entity);
     }
 

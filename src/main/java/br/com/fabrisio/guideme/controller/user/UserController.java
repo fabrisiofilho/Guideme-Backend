@@ -64,6 +64,11 @@ public class UserController {
         return ResponseEntity.ok(service.updatePhoto(attachments));
     }
 
+    @PutMapping("/updateUser")
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserDTO.UpdateUser updateUser){
+        return ResponseEntity.ok(service.updateUser(updateUser));
+    }
+
     @PutMapping("/updateName")
     public ResponseEntity<UserEntity> update(@RequestBody UserDTO.UpdateName updateName){
         return ResponseEntity.ok(service.updateName(updateName));

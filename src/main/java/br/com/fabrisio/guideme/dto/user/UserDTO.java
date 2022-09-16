@@ -82,6 +82,17 @@ public class UserDTO {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class UpdateUser {
+        private Long id;
+        private String name;
+        private String password;
+        private String email;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Recover {
         private String email;
     }

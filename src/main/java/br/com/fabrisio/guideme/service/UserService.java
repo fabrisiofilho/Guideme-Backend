@@ -24,6 +24,7 @@ public interface UserService {
     UserEntity findByUsername(String email);
     UserEntity updatePhoto(MultipartFile multipartFile) throws IOException;
     UserEntity updateName(UserDTO.UpdateName dto);
+    UserEntity updateUser(UserDTO.UpdateUser dto);
     UserEntity updateRecoverToken(String token, UserEntity userEntity);
     UserEntity findByTokenRecover(String token);
     List<UserEntity> ranking();

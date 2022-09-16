@@ -72,8 +72,8 @@ public class AuthController {
     public ResponseEntity<RefreshTokenDTO> refreshToken(@RequestBody RefreshTokenDTO refreshToken){
         tokenJWTSecurity.tokenValid(refreshToken.getRefreshToken());
         var userLogged = userService.findByEmail(refreshToken.getEmail());
-        var newToken = tokenJWTSecurity.generateToken(userLogged.getUsername());
-        var newRefreshToken = tokenJWTSecurity.generateRefreshToken(userLogged.getUsername());
+        var newToken = tokenJWTSecurity.generateToken(userLogged.getEmail());
+        var newRefreshToken = tokenJWTSecurity.generateRefreshToken(userLogged.getEmail());
 
         RefreshTokenDTO request = RefreshTokenDTO.builder()
                 .token(newToken)

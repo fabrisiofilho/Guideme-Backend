@@ -1,6 +1,9 @@
 package br.com.fabrisio.guideme.entity.user;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.exception.BuninessException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -57,7 +61,8 @@ public class UserEntity implements Serializable {
     @JoinColumn(name = "inventory_id", referencedColumnName = "id")
     private InventoryEntity inventory;
 
-    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserProgressEntity> progress;
 
     @Column(name = "create_date")
@@ -81,6 +86,13 @@ public class UserEntity implements Serializable {
         this.password = password;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public void atualizarCoin(Double value) {
+        if (this.coins - value < 0) {
+            throw new BuninessException("Você não possui GuideCoin suficiente!");
+        }
+        this.coins -= value;
     }
 
 }

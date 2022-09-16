@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.controller.store;
 
+import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
 import br.com.fabrisio.guideme.dto.store.ItemDTO;
 import br.com.fabrisio.guideme.entity.store.ItemEntity;
 import br.com.fabrisio.guideme.service.StoreService;
@@ -59,6 +60,12 @@ public class StoreController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<String> delete(@PathVariable Long id){
         service.deleteItem(id);
+        return ResponseEntity.ok("Ok");
+    }
+
+    @PostMapping("/buy/{id}")
+    public ResponseEntity<String> buyItem(@PathVariable Long id){
+        service.buyItem(GuidemeContext.getCurrentUser(), id);
         return ResponseEntity.ok("Ok");
     }
 

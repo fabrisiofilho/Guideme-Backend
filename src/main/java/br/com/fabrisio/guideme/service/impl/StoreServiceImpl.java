@@ -2,17 +2,23 @@ package br.com.fabrisio.guideme.service.impl;
 
 import br.com.fabrisio.guideme.dto.store.ItemDTO;
 import br.com.fabrisio.guideme.entity.store.ItemEntity;
+import br.com.fabrisio.guideme.entity.user.UserEntity;
+import br.com.fabrisio.guideme.exception.BuninessException;
+import br.com.fabrisio.guideme.repository.InventoryRepository;
 import br.com.fabrisio.guideme.repository.ItemRepository;
+import br.com.fabrisio.guideme.repository.UserRepository;
 import br.com.fabrisio.guideme.service.StoreService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class StoreServiceImpl implements StoreService {
 
     @Autowired
@@ -20,6 +26,12 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private InventoryRepository inventoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public ItemEntity createItem(ItemDTO itemDTO) {
@@ -56,6 +68,24 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Page<ItemEntity> seachItens(String title, Pageable pageable) {
         return itemRepository.search(title, pageable);
+    }
+
+    @Override
+    public ItemEntity buyItem(UserEntity user, Long idItem) {
+
+        var item = readItem(idItem);
+        user.atualizarCoin(item.getPrice());
+        userRepository.save(user);
+
+        if (user.getInventory().getItems().stream().anyMatch(it -> it.getId().equals(item.getId()))) {
+            throw new BuninessException("Você já possui este item em seu inventário.");
+        }
+
+        user.getInventory().getItems().add(item);
+        user.getInventory().setUser(user);
+        inventoryRepository.save(user.getInventory());
+
+        return item;
     }
 
 }

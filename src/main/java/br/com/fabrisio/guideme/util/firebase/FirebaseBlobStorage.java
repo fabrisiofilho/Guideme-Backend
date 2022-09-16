@@ -18,7 +18,7 @@ import java.nio.file.Files;
 @Component
 public class FirebaseBlobStorage {
 
-    private static String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/guideme-js/o/%s?alt=media";
+    private static String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/guideme-js.appspot.com/o/%s?alt=media";
     private static String TEMP_URL = "";
 
 

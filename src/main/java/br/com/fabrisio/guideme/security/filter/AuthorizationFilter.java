@@ -61,7 +61,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         AntPathMatcher pathMatcher = new AntPathMatcher();
-        return Arrays.asList(URL_IGNORE).stream().anyMatch(p -> pathMatcher.match(p, request.getRequestURI()));
+        return Arrays.stream(URL_IGNORE).anyMatch(p -> pathMatcher.match(p, request.getRequestURI()));
     }
 
     @Override
