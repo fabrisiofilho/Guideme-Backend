@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByTokenRecover(String email);
 
-    @Query("SELECT p FROM UserEntity p WHERE p.profile = 1 ORDER BY p.points DESC")
+    @Query("SELECT p FROM UserEntity p WHERE p.profile=0 ORDER BY p.points DESC")
     List<UserEntity> ranking();
 
 }
