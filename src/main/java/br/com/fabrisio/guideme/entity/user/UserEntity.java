@@ -1,6 +1,7 @@
 package br.com.fabrisio.guideme.entity.user;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.notification.NotificationEntity;
 import br.com.fabrisio.guideme.exception.BuninessException;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -64,6 +65,9 @@ public class UserEntity implements Serializable {
     @JsonBackReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserProgressEntity> progress;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<NotificationEntity> notifications;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
