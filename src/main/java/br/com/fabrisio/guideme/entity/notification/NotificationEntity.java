@@ -1,6 +1,7 @@
 package br.com.fabrisio.guideme.entity.notification;
 
 import br.com.fabrisio.guideme.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,9 @@ public class NotificationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private UserEntity user;
 
     private String content;

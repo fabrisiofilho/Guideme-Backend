@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.service.impl;
 
+import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
 import br.com.fabrisio.guideme.dto.store.ItemDTO;
 import br.com.fabrisio.guideme.entity.store.ItemEntity;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
@@ -67,7 +68,11 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Page<ItemEntity> seachItens(String title, Pageable pageable) {
-        return itemRepository.search(title, pageable);
+        var listItem = GuidemeContext.getCurrentUser().getInventory().getItems();
+        if (listItem.isEmpty()) {
+            return itemRepository.search(title, pageable);
+        }
+        return itemRepository.search(title, pageable, listItem);
     }
 
     @Override

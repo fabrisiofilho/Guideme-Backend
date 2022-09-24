@@ -58,15 +58,13 @@ public class StoreController {
 
     @DeleteMapping("/item/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<String> delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id){
         service.deleteItem(id);
-        return ResponseEntity.ok("Ok");
     }
 
     @PostMapping("/buy/{id}")
-    public ResponseEntity<String> buyItem(@PathVariable Long id){
+    public void buyItem(@PathVariable Long id){
         service.buyItem(GuidemeContext.getCurrentUser(), id);
-        return ResponseEntity.ok("Ok");
     }
 
 }

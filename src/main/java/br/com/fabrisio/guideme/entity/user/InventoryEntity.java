@@ -27,7 +27,11 @@ public class InventoryEntity {
     @OneToOne(mappedBy = "inventory")
     private UserEntity user;
 
-    @OneToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(
+            name = "inventory_items",
+            joinColumns = @JoinColumn(name = "inventory_id"),
+            inverseJoinColumns = @JoinColumn(name = "items_id"))
     private List<ItemEntity> items;
 
 }
