@@ -1,6 +1,7 @@
 package br.com.fabrisio.guideme.service;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.notification.NotificationEntity;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +29,8 @@ public interface UserService {
     UserEntity updateRecoverToken(String token, UserEntity userEntity);
     UserEntity findByTokenRecover(String token);
     List<UserEntity> ranking();
+
+    List<NotificationEntity> notification();
+    void readNotification(Long id);
     
 }

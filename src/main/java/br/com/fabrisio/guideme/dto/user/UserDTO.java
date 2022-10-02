@@ -17,6 +17,7 @@ public class UserDTO {
 
     private String username;
 
+    @javax.validation.constraints.Email(message = "E-mail inválido!")
     private String email;
 
     private String urlPhoto;

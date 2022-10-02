@@ -116,8 +116,8 @@ public class RoadmapServiceImpl implements RoadmapService {
                         .filter(userProgress -> userProgress.getStep().getId().equals(step.getId()))
                         .findAny().orElse(null);
                 if (Objects.nonNull(upe)) {
-                    stepDTO.setIsDone(upe.isDone());
-                    stepDTO.setIsOpen(upe.isOpen());
+                    stepDTO.setIsDone(upe.getIsDone());
+                    stepDTO.setIsOpen(upe.getIsOpen());
                 }
                 layerDTO.getSteps().add(stepDTO);
             });

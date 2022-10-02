@@ -2,10 +2,15 @@ package br.com.fabrisio.guideme.service.impl;
 
 import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.notification.NotificationEntity;
+import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
 import br.com.fabrisio.guideme.entity.user.InventoryEntity;
 import br.com.fabrisio.guideme.entity.user.ProfileEnum;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
+import br.com.fabrisio.guideme.entity.user.UserProgressEntity;
 import br.com.fabrisio.guideme.exception.NotFoundException;
+import br.com.fabrisio.guideme.repository.LayerRepository;
+import br.com.fabrisio.guideme.repository.UserProgressRepository;
 import br.com.fabrisio.guideme.repository.UserRepository;
 import br.com.fabrisio.guideme.service.UserService;
 import br.com.fabrisio.guideme.util.firebase.FirebaseBlobStorage;
@@ -33,7 +38,13 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private UserProgressRepository userProgressRepository;
+
+    @Autowired
     private FirebaseBlobStorage firebaseBlobStorage;
+
+    @Autowired
+    private LayerRepository layerRepository;
 
     @Override
     public UserEntity create(UserDTO userDto) {
@@ -50,7 +61,25 @@ public class UserServiceImpl implements UserService {
                 .profile(ProfileEnum.ALUNO)
                 .inventory(new InventoryEntity())
                 .build();
-        return repository.save(user);
+
+        UserEntity finalUser = repository.save(user);
+
+        var steps = findByFirstLayer();
+
+        steps.forEach(it ->
+                userProgressRepository.save(UserProgressEntity.builder()
+                    .user(finalUser)
+                    .step(it)
+                    .isDone(false)
+                    .isOpen(true)
+                    .build())
+        );
+
+        return finalUser;
+    }
+
+    private List<StepEntity> findByFirstLayer() {
+        return layerRepository.findByFirstLayer();
     }
 
     @Override
@@ -156,6 +185,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> ranking() {
         return repository.ranking();
+    }
+
+    @Override
+    public List<NotificationEntity> notification() {
+        return repository.notification(GuidemeContext.getCurrentUser().getId());
+    }
+
+    @Override
+    public void readNotification(Long id) {
+        repository.readNotification(id);
     }
 
     @Override

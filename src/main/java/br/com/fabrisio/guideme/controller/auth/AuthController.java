@@ -4,6 +4,7 @@ import br.com.fabrisio.guideme.configuration.SuccessResponse;
 import br.com.fabrisio.guideme.dto.login.RefreshTokenDTO;
 import br.com.fabrisio.guideme.dto.user.UserDTO;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
+import br.com.fabrisio.guideme.exception.BuninessException;
 import br.com.fabrisio.guideme.security.CustomUserDetailsService;
 import br.com.fabrisio.guideme.security.SecurityServiceImpl;
 import br.com.fabrisio.guideme.security.util.TokenJWTSecurity;
@@ -44,12 +45,12 @@ public class AuthController {
     }
 
     @PostMapping("/forgotPassword")
-    public ResponseEntity<String> forgot(@RequestBody UserDTO.Recover user) {
-        if (Boolean.TRUE.equals(userService.isEmailInUse(user.getEmail()))) {
-            securityService.sendEmailRevocer(user.getEmail());
-            return ResponseEntity.ok("Ok");
+    public void forgot(@RequestBody String email) {
+        if (Boolean.TRUE.equals(userService.isEmailInUse(email))) {
+            securityService.sendEmailRevocer(email);
+            return;
         }
-        return ResponseEntity.badRequest().body("Email não pertence a nenhuma usuario.");
+        throw new BuninessException("Não existe nenhum usuario com este email.");
     }
 
     @PostMapping("/validTokenRecover")

@@ -29,6 +29,6 @@ public class NotificationEntity {
     private String content;
 
     @Column(name = "is_read")
-    private boolean isRead;
+    private Boolean isRead;
 
 }

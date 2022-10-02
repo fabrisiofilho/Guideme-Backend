@@ -1,6 +1,7 @@
 package br.com.fabrisio.guideme.controller.user;
 
 import br.com.fabrisio.guideme.dto.user.UserDTO;
+import br.com.fabrisio.guideme.entity.notification.NotificationEntity;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,16 @@ public class UserController {
     @GetMapping("/ranking")
     public ResponseEntity<List<UserEntity>> ranking(){
         return ResponseEntity.ok(service.ranking());
+    }
+
+    @GetMapping("/notification")
+    public ResponseEntity<List<NotificationEntity>> notification(){
+        return ResponseEntity.ok(service.notification());
+    }
+
+    @PostMapping("/notification/{id}")
+    public void readNotification(@PathVariable Long id){
+        service.readNotification(id);
     }
 
 }

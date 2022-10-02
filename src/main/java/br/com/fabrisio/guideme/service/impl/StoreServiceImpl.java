@@ -8,6 +8,7 @@ import br.com.fabrisio.guideme.exception.BuninessException;
 import br.com.fabrisio.guideme.repository.InventoryRepository;
 import br.com.fabrisio.guideme.repository.ItemRepository;
 import br.com.fabrisio.guideme.repository.UserRepository;
+import br.com.fabrisio.guideme.service.NotificationService;
 import br.com.fabrisio.guideme.service.StoreService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,12 @@ public class StoreServiceImpl implements StoreService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public ItemEntity createItem(ItemDTO itemDTO) {
+        notificationService.create("Novo item cadastrado.");
         return itemRepository.save(modelMapper.map(itemDTO, ItemEntity.class));
     }
 

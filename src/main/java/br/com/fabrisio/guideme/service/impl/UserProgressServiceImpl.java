@@ -1,11 +1,15 @@
 package br.com.fabrisio.guideme.service.impl;
 
 import br.com.fabrisio.guideme.dto.user.UserProgressDTO;
+import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.entity.user.UserProgressEntity;
 import br.com.fabrisio.guideme.exception.NotFoundException;
 import br.com.fabrisio.guideme.repository.UserProgressRepository;
+import br.com.fabrisio.guideme.repository.UserRepository;
+import br.com.fabrisio.guideme.service.StepService;
 import br.com.fabrisio.guideme.service.UserProgressService;
+import br.com.fabrisio.guideme.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +27,32 @@ public class UserProgressServiceImpl implements UserProgressService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private StepService stepService;
+
     @Override
     public UserProgressEntity create(UserProgressDTO dto) {
-        return userProgressRepository.save(modelMapper.map(dto, UserProgressEntity.class));
+        UserEntity userEntity = userService.read(dto.getUserId());
+        StepEntity stepEntity = stepService.read(dto.getStepId());
+        UserProgressEntity userProgressEntity = UserProgressEntity.builder()
+                .step(stepEntity)
+                .user(userEntity)
+                .isOpen(dto.isOpen())
+                .isDone(dto.isDone())
+                .build();
+
+        userEntity.setCoins(userEntity.getCoins() + stepEntity.getBountyCoin());
+        userEntity.setExps(userEntity.getExps() + stepEntity.getBountyXp());
+
+        userRepository.save(userEntity);
+
+        return userProgressRepository.save(userProgressEntity);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package br.com.fabrisio.guideme.controller.challenger;
 
 import br.com.fabrisio.guideme.dto.challenger.ChallengerDTO;
+import br.com.fabrisio.guideme.dto.challenger.ValidateChallengerDTO;
 import br.com.fabrisio.guideme.entity.challenger.ChallengerEntity;
+import br.com.fabrisio.guideme.entity.challenger.UserConclusionChallengerEntity;
 import br.com.fabrisio.guideme.service.ChallengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,10 +53,20 @@ public class ChallengerController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<String> delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id){
         service.deleteChallenger(id);
-        return ResponseEntity.ok("Ok");
     }
 
+    @PostMapping("/validated")
+    @PreAuthorize("hasAnyAuthority('ALUNO')")
+    public ResponseEntity<UserConclusionChallengerEntity> validatedChallenger(@RequestBody ValidateChallengerDTO validateChallengerDTO){
+        return ResponseEntity.ok(service.validatedChallenger(validateChallengerDTO));
+    }
+
+    @GetMapping("/findChallengerByUser")
+    @PreAuthorize("hasAnyAuthority('ALUNO')")
+    public ResponseEntity<List<ChallengerEntity>> findChallengerByUser(){
+        return ResponseEntity.ok(service.findByUser());
+    }
 
 }

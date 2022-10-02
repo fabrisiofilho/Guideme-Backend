@@ -8,6 +8,7 @@ import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
 import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
 import br.com.fabrisio.guideme.service.LayerService;
+import br.com.fabrisio.guideme.service.NotificationService;
 import br.com.fabrisio.guideme.service.RoadmapService;
 import br.com.fabrisio.guideme.service.StepService;
 import org.modelmapper.ModelMapper;
@@ -33,6 +34,9 @@ public class RoadmapController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @PostMapping("")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<RoadmapDTO> register(@RequestBody RoadmapDTO roadmap){
@@ -51,8 +55,9 @@ public class RoadmapController {
 
     @PostMapping("/addStep")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<RoadmapDTO> addLayer(@RequestBody StepDTO dto){
+    public ResponseEntity<RoadmapDTO> addStep(@RequestBody StepDTO dto){
         RoadmapEntitty entity = roadmapService.addStepToLayer(dto.getIdLayer(), dto);
+        notificationService.create("Novo modulo cadastrado.");
         RoadmapDTO roadmapDTO = modelMapper.map(entity, RoadmapDTO.class);
         return new SuccessResponse<RoadmapDTO>().handle(roadmapDTO, this.getClass(), HttpStatus.OK);
     }

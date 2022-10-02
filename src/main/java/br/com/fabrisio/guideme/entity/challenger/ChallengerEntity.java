@@ -33,4 +33,6 @@ public class ChallengerEntity {
 
     private Double points;
 
+    private Boolean isDone;
+
 }
