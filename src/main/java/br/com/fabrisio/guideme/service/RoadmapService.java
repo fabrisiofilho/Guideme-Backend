@@ -1,9 +1,6 @@
 package br.com.fabrisio.guideme.service;
 
-import br.com.fabrisio.guideme.dto.roadmap.ContentDTO;
-import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
-import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
-import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
+import br.com.fabrisio.guideme.dto.roadmap.*;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
 
 public interface RoadmapService {
@@ -16,5 +13,7 @@ public interface RoadmapService {
     RoadmapEntitty addStepToLayer(Long id, StepDTO stepDTO);
     RoadmapEntitty addContentToStep(Long id, ContentDTO contentDTO);
     RoadmapDTO getRoadmapByUserProgress();
+
+    RoadmapEntitty addValidateStep(QuestionDTO questionDTO);
 
 }

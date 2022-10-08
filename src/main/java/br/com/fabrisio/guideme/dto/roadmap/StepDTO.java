@@ -1,5 +1,6 @@
 package br.com.fabrisio.guideme.dto.roadmap;
 
+import br.com.fabrisio.guideme.entity.roadmap.QuestionEntity;
 import lombok.*;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public class StepDTO {
     private Long idLayer;
     private Boolean isDone;
     private Boolean isOpen;
+    private QuestionDTO questions;
 }

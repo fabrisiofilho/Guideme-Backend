@@ -15,6 +15,6 @@ public class ChallengerDTO {
     private String result;
     private Double bountyCoin;
     private Double bountyXp;
-
+    private Double points;
 
 }

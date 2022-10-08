@@ -1,21 +1,13 @@
 package br.com.fabrisio.guideme.service.impl;
 
 import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
-import br.com.fabrisio.guideme.dto.roadmap.ContentDTO;
-import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
-import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
-import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
-import br.com.fabrisio.guideme.entity.roadmap.ContentEntity;
-import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
-import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
-import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
+import br.com.fabrisio.guideme.dto.roadmap.*;
+import br.com.fabrisio.guideme.dto.user.UserProgressDTO;
+import br.com.fabrisio.guideme.entity.roadmap.*;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
 import br.com.fabrisio.guideme.entity.user.UserProgressEntity;
 import br.com.fabrisio.guideme.exception.BuninessException;
-import br.com.fabrisio.guideme.repository.ContentRepository;
-import br.com.fabrisio.guideme.repository.LayerRepository;
-import br.com.fabrisio.guideme.repository.RoadmapRepository;
-import br.com.fabrisio.guideme.repository.StepRepository;
+import br.com.fabrisio.guideme.repository.*;
 import br.com.fabrisio.guideme.service.RoadmapService;
 import br.com.fabrisio.guideme.service.UserProgressService;
 import org.modelmapper.ModelMapper;
@@ -45,6 +37,9 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     @Autowired
     private UserProgressService userProgressService;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -86,8 +81,18 @@ public class RoadmapServiceImpl implements RoadmapService {
         LayerEntity layerEntity = layerRepository.findById(id).orElseThrow(() -> { throw new BuninessException("Não foi possivel encontrar o layer.");});
         StepEntity step = modelMapper.map(stepDTO, StepEntity.class);
         step.setLayer(layerEntity);
+        step.setContents(new ArrayList<>());
         stepRepository.save(step);
+        saveContent(step, stepDTO);
         return read(layerEntity.getRoadmap().getId());
+    }
+
+    private void saveContent(StepEntity stepEntity, StepDTO stepDTO) {
+        stepDTO.getContents().forEach(it -> {
+            var content = modelMapper.map(it, ContentEntity.class);
+            content.setStep(stepEntity);
+            contentRepository.save(content);
+        });
     }
 
     @Override
@@ -115,6 +120,7 @@ public class RoadmapServiceImpl implements RoadmapService {
                 var upe = userProgressEntity.stream()
                         .filter(userProgress -> userProgress.getStep().getId().equals(step.getId()))
                         .findAny().orElse(null);
+                upe = validateIsExistOneOpen(roadmapEntitty.getLayers().indexOf(layer), upe, step.getId());
                 if (Objects.nonNull(upe)) {
                     stepDTO.setIsDone(upe.getIsDone());
                     stepDTO.setIsOpen(upe.getIsOpen());
@@ -127,5 +133,26 @@ public class RoadmapServiceImpl implements RoadmapService {
         return dto;
     }
 
+    private UserProgressEntity validateIsExistOneOpen(int index, UserProgressEntity userProgressEntity, Long stepId) {
+        if (Objects.isNull(userProgressEntity) && index == 0) {
+            userProgressEntity = userProgressService.create(UserProgressDTO.builder()
+                            .isOpen(true)
+                            .isDone(false)
+                            .stepId(stepId)
+                            .userId(GuidemeContext.getCurrentUser().getId())
+                            .build());
+        }
+        return userProgressEntity;
+    }
+
+    @Override
+    public RoadmapEntitty addValidateStep(QuestionDTO questionDTO) {
+        var questionEntitty = modelMapper.map(questionDTO, QuestionEntity.class);
+        questionEntitty = questionRepository.save(questionEntitty);
+        var step = stepRepository.findById(questionDTO.getStepId()).orElseThrow(() -> { throw new BuninessException("Não foi possivel encontrar o Step.");});
+        step.setQuestions(questionEntitty);
+        stepRepository.save(step);
+        return read(step.getLayer().getRoadmap().getId());
+    }
 
 }

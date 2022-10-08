@@ -1,16 +1,12 @@
 package br.com.fabrisio.guideme.controller.roadmap;
 
 import br.com.fabrisio.guideme.configuration.SuccessResponse;
-import br.com.fabrisio.guideme.dto.roadmap.ContentDTO;
-import br.com.fabrisio.guideme.dto.roadmap.LayerDTO;
-import br.com.fabrisio.guideme.dto.roadmap.RoadmapDTO;
-import br.com.fabrisio.guideme.dto.roadmap.StepDTO;
+import br.com.fabrisio.guideme.dto.roadmap.*;
+import br.com.fabrisio.guideme.entity.roadmap.ContentEntity;
 import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.roadmap.RoadmapEntitty;
-import br.com.fabrisio.guideme.service.LayerService;
-import br.com.fabrisio.guideme.service.NotificationService;
-import br.com.fabrisio.guideme.service.RoadmapService;
-import br.com.fabrisio.guideme.service.StepService;
+import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
+import br.com.fabrisio.guideme.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +29,9 @@ public class RoadmapController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ContentService contentService;
 
     @Autowired
     private NotificationService notificationService;
@@ -86,9 +85,27 @@ public class RoadmapController {
 
     @DeleteMapping("/delete/step/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<RoadmapDTO> deleteStepById(@PathVariable Long id){
+        StepEntity stepEntity = stepService.delete(id);
+        RoadmapEntitty entity = roadmapService.read(stepEntity.getLayer().getRoadmap().getId());
+        RoadmapDTO dto = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/layer/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<RoadmapDTO> deleteLayerById(@PathVariable Long id){
         LayerEntity layerEntity = layerService.delete(id);
         RoadmapEntitty entity = roadmapService.read(layerEntity.getRoadmap().getId());
+        RoadmapDTO dto = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/content/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<RoadmapDTO> deleteContentById(@PathVariable Long id){
+        ContentEntity contentEntity = contentService.delete(id);
+        RoadmapEntitty entity = roadmapService.read(contentEntity.getStep().getLayer().getRoadmap().getId());
         RoadmapDTO dto = modelMapper.map(entity, RoadmapDTO.class);
         return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
     }
@@ -98,6 +115,22 @@ public class RoadmapController {
     public ResponseEntity<RoadmapDTO> getRoadmapByUserProgress(){
         RoadmapDTO dto = roadmapService.getRoadmapByUserProgress();
         return new SuccessResponse<RoadmapDTO>().handle(dto, this.getClass(), HttpStatus.OK);
+    }
+
+    @PostMapping("/addValidate")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<RoadmapDTO> addValidate(@RequestBody QuestionDTO dto){
+        RoadmapEntitty entity = roadmapService.addValidateStep(dto);
+        RoadmapDTO roadmapDTO = modelMapper.map(entity, RoadmapDTO.class);
+        return new SuccessResponse<RoadmapDTO>().handle(roadmapDTO, this.getClass(), HttpStatus.OK);
+    }
+
+    @GetMapping("/question/{id}")
+    @PreAuthorize("hasAnyAuthority('ALUNO')")
+    public ResponseEntity<StepDTO> getQuestion(@PathVariable Long id){
+        StepEntity entity = stepService.read(id);
+        StepDTO stepDTO = modelMapper.map(entity, StepDTO.class);
+        return new SuccessResponse<StepDTO>().handle(stepDTO, this.getClass(), HttpStatus.OK);
     }
 
 }

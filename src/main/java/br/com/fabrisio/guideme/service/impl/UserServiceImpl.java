@@ -3,7 +3,7 @@ package br.com.fabrisio.guideme.service.impl;
 import br.com.fabrisio.guideme.configuration.context.GuidemeContext;
 import br.com.fabrisio.guideme.dto.user.UserDTO;
 import br.com.fabrisio.guideme.entity.notification.NotificationEntity;
-import br.com.fabrisio.guideme.entity.roadmap.StepEntity;
+import br.com.fabrisio.guideme.entity.roadmap.LayerEntity;
 import br.com.fabrisio.guideme.entity.user.InventoryEntity;
 import br.com.fabrisio.guideme.entity.user.ProfileEnum;
 import br.com.fabrisio.guideme.entity.user.UserEntity;
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity finalUser = repository.save(user);
 
-        var steps = findByFirstLayer();
+        var steps = findByFirstLayer().get(0).getSteps();
 
         steps.forEach(it ->
                 userProgressRepository.save(UserProgressEntity.builder()
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         return finalUser;
     }
 
-    private List<StepEntity> findByFirstLayer() {
+    private List<LayerEntity> findByFirstLayer() {
         return layerRepository.findByFirstLayer();
     }
 

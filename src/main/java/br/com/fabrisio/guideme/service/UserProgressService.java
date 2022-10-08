@@ -13,5 +13,6 @@ public interface UserProgressService {
     UserProgressEntity update(UserProgressDTO dto);
     UserProgressEntity delete(Long id);
     List<UserProgressEntity> findByUser(UserEntity user);
+    UserProgressEntity findByUserAndStep(Long userId, Long stepId);
 
 }

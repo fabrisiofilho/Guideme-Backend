@@ -34,7 +34,11 @@ public class StepEntity {
     @JoinColumn(name="layer_id", nullable=false)
     private LayerEntity layer;
 
-    @OneToMany(mappedBy = "step")
+    @OneToMany(mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContentEntity> contents;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    private QuestionEntity questions;
 
 }

@@ -76,4 +76,9 @@ public class UserProgressServiceImpl implements UserProgressService {
     public List<UserProgressEntity> findByUser(UserEntity user) {
         return userProgressRepository.findByUser(user.getId());
     }
+
+    @Override
+    public UserProgressEntity findByUserAndStep(Long userId, Long stepId) {
+        return userProgressRepository.findByUserAndStep(userId, stepId);
+    }
 }

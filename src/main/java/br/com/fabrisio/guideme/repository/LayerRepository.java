@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface LayerRepository extends JpaRepository<LayerEntity, Long> {
 
-    @Query("SELECT l.steps FROM LayerEntity l WHERE l.id = 1")
-    List<StepEntity> findByFirstLayer();
+    @Query("SELECT l FROM LayerEntity l ORDER BY l.id ASC")
+    List<LayerEntity> findByFirstLayer();
 
 }

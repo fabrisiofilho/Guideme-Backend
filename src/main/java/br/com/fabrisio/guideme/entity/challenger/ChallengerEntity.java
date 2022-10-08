@@ -33,6 +33,7 @@ public class ChallengerEntity {
 
     private Double points;
 
+    @Transient
     private Boolean isDone;
 
 }

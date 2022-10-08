@@ -24,7 +24,7 @@ public class LayerEntity {
     @JoinColumn(name="roadmap_id", nullable=false)
     private RoadmapEntitty roadmap;
 
-    @OneToMany(mappedBy = "layer")
+    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StepEntity> steps;
 
 }
