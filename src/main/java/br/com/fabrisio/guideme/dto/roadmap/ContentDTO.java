@@ -11,6 +11,7 @@ public class ContentDTO {
     private Long id;
     private String title;
     private String payload;
+    private String code;
     private String urlVideo;
     private String linkOne;
     private String linkTwo;

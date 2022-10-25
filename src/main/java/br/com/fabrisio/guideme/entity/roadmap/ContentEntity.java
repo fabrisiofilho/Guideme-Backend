@@ -23,6 +23,8 @@ public class ContentEntity {
 
     private String payload;
 
+    private String code;
+
     @Column(name = "url_video")
     private String urlVideo;
 
