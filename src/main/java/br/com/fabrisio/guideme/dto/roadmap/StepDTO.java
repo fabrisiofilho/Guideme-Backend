@@ -1,6 +1,5 @@
 package br.com.fabrisio.guideme.dto.roadmap;
 
-import br.com.fabrisio.guideme.entity.roadmap.QuestionEntity;
 import lombok.*;
 
 import java.util.List;

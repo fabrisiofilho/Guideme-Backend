@@ -91,8 +91,10 @@ public class RoadmapServiceImpl implements RoadmapService {
         stepDTO.getContents().forEach(it -> {
             var content = modelMapper.map(it, ContentEntity.class);
             content.setStep(stepEntity);
-            contentRepository.save(content);
+            var contentEntity = contentRepository.save(content);
+            stepEntity.getContents().add(contentEntity);
         });
+        stepRepository.save(stepEntity);
     }
 
     @Override
