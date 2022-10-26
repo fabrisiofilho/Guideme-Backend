@@ -44,7 +44,6 @@ public class FirebaseBlobStorage {
         Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("C:\\Users\\fabri\\Desktop\\git\\Guideme\\guideme\\src\\main\\resources\\json\\guideme.json"));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.delete(blobId);
-
     }
 
     private String uploadFile(File file, String fileName) throws IOException {
