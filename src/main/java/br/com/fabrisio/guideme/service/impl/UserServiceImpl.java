@@ -136,10 +136,6 @@ public class UserServiceImpl implements UserService {
     public UserEntity updatePhoto(MultipartFile multipartFile) throws IOException {
         UserEntity entity = GuidemeContext.getCurrentUser();
 
-        if (Objects.nonNull(entity.getFileName())) {
-            firebaseBlobStorage.deleteFile(entity.getFileName());
-        }
-
         if (Objects.nonNull(multipartFile)) {
             String fileName = firebaseBlobStorage.getFileNamePhotoProfile(multipartFile, entity);
             String url = firebaseBlobStorage.upload(multipartFile, fileName);
