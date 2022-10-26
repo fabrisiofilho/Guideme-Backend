@@ -41,7 +41,7 @@ public class FirebaseBlobStorage {
 
     public void deleteFile(String fileName) throws IOException {
         BlobId blobId = BlobId.of("guideme-js.appspot.com", fileName);
-        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("C:\\Users\\fabri\\Desktop\\git\\Guideme\\guideme\\src\\main\\resources\\json\\guideme.json"));
+        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/json/guideme.json"));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.delete(blobId);
     }
@@ -49,7 +49,7 @@ public class FirebaseBlobStorage {
     private String uploadFile(File file, String fileName) throws IOException {
         BlobId blobId = BlobId.of("guideme-js.appspot.com", fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
-        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("C:\\Users\\fabri\\Desktop\\git\\Guideme\\guideme\\src\\main\\resources\\json\\guideme.json"));
+        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/json/guideme.json"));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
         return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
