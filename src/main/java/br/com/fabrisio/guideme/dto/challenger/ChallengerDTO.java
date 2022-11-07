@@ -13,8 +13,10 @@ public class ChallengerDTO {
     private String title;
     private String question;
     private String result;
+    private String options;
     private Double bountyCoin;
     private Double bountyXp;
     private Double points;
+
 
 }

@@ -93,7 +93,7 @@ public class ChallengerServiceImpl implements ChallengerService {
         UserEntity userEntity = GuidemeContext.getCurrentUser();
 
 
-        if (!challenger.getResult().trim().equalsIgnoreCase(validateChallengerDTO.getResponse().trim())) {
+        if (!challenger.getResult().trim().equals(validateChallengerDTO.getResponse().trim())) {
             var ucce = UserConclusionChallengerEntity.builder()
                     .challengerEntity(challenger)
                     .user(userEntity)

@@ -25,6 +25,8 @@ public class ChallengerEntity {
 
     private String result;
 
+    private String options;
+
     @Column(name = "bounty_coin")
     private Double bountyCoin;
 

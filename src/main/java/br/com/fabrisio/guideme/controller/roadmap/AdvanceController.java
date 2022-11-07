@@ -50,24 +50,26 @@ public class AdvanceController {
             up.setIsOpen(false);
             up = userProgressRepository.save(up);
             validateNextLayer(up, userEntity);
+        } else {
+            throw new BuninessException("Tente novamente, há respostas incorretas");
         }
     }
 
 
     private boolean validateForm(QuestionEntity questionEntity, QuestionDTO questionDTO) {
-        if (!questionEntity.getQuestionOne().equals(questionDTO.getQuestionOne())) {
+        if (!questionEntity.getResponseOne().equals(questionDTO.getResponseOne())) {
             return false;
         }
-        if (!questionEntity.getQuestionTwo().equals(questionDTO.getQuestionTwo())) {
+        if (!questionEntity.getResponseTwo().equals(questionDTO.getResponseTwo())) {
             return false;
         }
-        if (!questionEntity.getQuestionThree().equals(questionDTO.getQuestionThree())) {
+        if (!questionEntity.getResponseThree().equals(questionDTO.getResponseThree())) {
             return false;
         }
-        if (!questionEntity.getQuestionFour().equals(questionDTO.getQuestionFour())) {
+        if (!questionEntity.getResponseFour().equals(questionDTO.getResponseFour())) {
             return false;
         }
-        if (!questionEntity.getQuestionFive().equals(questionDTO.getQuestionFive())) {
+        if (!questionEntity.getResponseFive().equals(questionDTO.getResponseFive())) {
             return false;
         }
         return true;
