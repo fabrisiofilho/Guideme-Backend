@@ -41,7 +41,7 @@ public class AdvanceController {
     public void registerProgress(@RequestBody QuestionDTO questionDTO){
         QuestionEntity questionEntity = questionRepository.findById(questionDTO.getId()).orElse(null);
         if (Objects.isNull(questionEntity)) {
-            throw new BuninessException("");
+            throw new BuninessException("Não foi possivel encontrar questionario");
         }
         if (validateForm(questionEntity, questionDTO)) {
             UserEntity userEntity = GuidemeContext.getCurrentUser();
@@ -79,15 +79,19 @@ public class AdvanceController {
         var user =  userProgressRepository.faltaStep(layer.getId(), userProgressRepository.findByUserAndStepIsFinally(userEntity.getId()));
         if (user.isEmpty()) {
             var list = layerRepository.findByFirstLayer();
-            var layerOpen = list.get(list.indexOf(layer) + 1);
-            layerOpen.getSteps().forEach(it ->
-                    userProgressRepository.save(UserProgressEntity.builder()
-                            .user(userEntity)
-                            .step(it)
-                            .isDone(false)
-                            .isOpen(true)
-                            .build())
-            );
+            try {
+                var layerOpen = list.get(list.indexOf(layer) + 1);
+                layerOpen.getSteps().forEach(it ->
+                        userProgressRepository.save(UserProgressEntity.builder()
+                                .user(userEntity)
+                                .step(it)
+                                .isDone(false)
+                                .isOpen(true)
+                                .build())
+                );
+            } catch (Exception ignored) {
+
+            }
         }
 
     }
