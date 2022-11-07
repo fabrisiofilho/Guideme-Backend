@@ -55,19 +55,19 @@ public class AdvanceController {
 
 
     private boolean validateForm(QuestionEntity questionEntity, QuestionDTO questionDTO) {
-        if (!questionEntity.getQuestionOne().equalsIgnoreCase(questionDTO.getQuestionOne())) {
+        if (!questionEntity.getQuestionOne().equals(questionDTO.getQuestionOne())) {
             return false;
         }
-        if (!questionEntity.getQuestionTwo().equalsIgnoreCase(questionDTO.getQuestionTwo())) {
+        if (!questionEntity.getQuestionTwo().equals(questionDTO.getQuestionTwo())) {
             return false;
         }
-        if (!questionEntity.getQuestionThree().equalsIgnoreCase(questionDTO.getQuestionThree())) {
+        if (!questionEntity.getQuestionThree().equals(questionDTO.getQuestionThree())) {
             return false;
         }
-        if (!questionEntity.getQuestionFour().equalsIgnoreCase(questionDTO.getQuestionFour())) {
+        if (!questionEntity.getQuestionFour().equals(questionDTO.getQuestionFour())) {
             return false;
         }
-        if (!questionEntity.getQuestionFive().equalsIgnoreCase(questionDTO.getQuestionFive())) {
+        if (!questionEntity.getQuestionFive().equals(questionDTO.getQuestionFive())) {
             return false;
         }
         return true;
