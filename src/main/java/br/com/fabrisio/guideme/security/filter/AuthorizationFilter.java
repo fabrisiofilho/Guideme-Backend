@@ -29,7 +29,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     private final UserService userService;
     private final CustomUserDetailsService CustomUserDetailsService;
 
-    private static final String[] URL_IGNORE = { "/auth/**" };
+    private static final String[] URL_IGNORE = { "/auth/**", "/health/**" };
 
     public AuthorizationFilter(AuthenticationManager authenticationManager, TokenJWTSecurity jwtSecurity,
                                UserService userService, CustomUserDetailsService customUserDetailsService) {

@@ -27,8 +27,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
-    private static final String[] PUBLIC_MATCHERS_GET = {};
+    private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
+    private static final String[] PUBLIC_MATCHERS_GET = { "/health/**" };
     private static final String[] PUBLIC_MATCHERS_POST = { "/auth/**" };
 
     private final UserDetailsService userDetailsService;
